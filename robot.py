@@ -75,7 +75,6 @@ class Robot(Job):
         importlib.reload(config)
         self.msg_type_dict = config.WxMessageType
         self.type_49_dict = config.Wx49MessageType
-        print(self.msg_type_dict)
         print('更新消息类型')
         self.LOG.info('更新消息类型')
 
