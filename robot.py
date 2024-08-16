@@ -66,7 +66,7 @@ class Robot(Job):
         id_name = {}
         notify_0 = []
         for contact in contacts:
-            if contact["ChatRoomNotify"] == 0 and contact["UserName"].endswith("@chatroom"):
+            if contact["ChatRoomNotify"] == 0:
                 notify_0.append(contact["UserName"])
             id_name[contact["UserName"]] = contact["Remark"] if contact["Remark"] else contact["NickName"]
         self.allContacts, self.silent_notice = id_name, notify_0
@@ -101,7 +101,8 @@ class Robot(Job):
         return True
 
     def processMsg(self, msg: WxMsg) -> None:
-        if msg.from_self() or msg.sender.startswith("gh_") or (msg.from_group() and msg.roomid in self.silent_notice and not self.is_at(msg)):
+        if msg.from_self() or msg.sender.startswith("gh_") or (msg.from_group() and msg.roomid in self.silent_notice and not self.is_at(msg)) or (
+                not msg.from_group() and msg.sender in self.silent_notice):
             return
         content = self.extract_content(msg)
         group_msg = f'群聊：{self.get_msg_sender(msg.roomid)}\n' if msg.from_group() else ''
