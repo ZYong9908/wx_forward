@@ -11,7 +11,7 @@ import re
 import importlib
 import config
 
-__version__ = "39.3.3.0"
+__version__ = "39.4.2.2"
 
 
 class Robot(Job):
